@@ -988,6 +988,80 @@
       height: 16px;
     }
 
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--warm), var(--green), var(--coral));
+      background-size: 300% 100%;
+      animation: progress-gradient 3s linear infinite;
+      z-index: 9999;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    @keyframes progress-gradient {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    /* ===== CUSTOM CURSOR ===== */
+    @media (pointer: fine) {
+      .custom-cursor {
+        position: fixed;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent);
+        pointer-events: none;
+        z-index: 10000;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s, height 0.2s, background 0.2s;
+        mix-blend-mode: difference;
+      }
+
+      .custom-cursor.hovering {
+        width: 40px;
+        height: 40px;
+        background: rgba(196, 100, 42, 0.15);
+        border: 2px solid var(--accent);
+        mix-blend-mode: normal;
+      }
+
+      .cursor-trail {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid rgba(196, 100, 42, 0.2);
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: all 0.15s ease-out;
+      }
+
+      body { cursor: none; }
+      a, button, .btn, .project-card, .skill-tag, .nav-toggle, .social-link, .highlight-card, .vision-card { cursor: none; }
+    }
+
+    /* ===== MORPHING BLOB ===== */
+    .orb-3 {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(184, 134, 11, 0.04), transparent 70%);
+      animation: morph-blob 20s ease-in-out infinite;
+    }
+
+    @keyframes morph-blob {
+      0%, 100% { border-radius: 50%; width: 600px; height: 600px; }
+      25% { border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%; width: 700px; height: 500px; }
+      50% { border-radius: 60% 40% 30% 70% / 40% 60% 40% 60%; width: 550px; height: 650px; }
+      75% { border-radius: 30% 70% 50% 50% / 50% 40% 60% 50%; width: 650px; height: 550px; }
+    }
+
     /* ===== ENHANCED ANIMATIONS ===== */
 
     /* Hero badge slide-in */
@@ -1180,14 +1254,246 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    /* ===== CARD SHINE SWEEP ===== */
+    .project-card::after,
+    .highlight-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        transparent,
+        transparent 40%,
+        rgba(255,255,255,0.08) 45%,
+        rgba(255,255,255,0.15) 50%,
+        rgba(255,255,255,0.08) 55%,
+        transparent 60%,
+        transparent
+      );
+      transform: rotate(30deg) translateY(100%);
+      transition: none;
+      pointer-events: none;
+    }
+
+    .project-card:hover::after,
+    .highlight-card:hover::after {
+      animation: card-shine 0.8s ease-out forwards;
+    }
+
+    @keyframes card-shine {
+      to { transform: rotate(30deg) translateY(-100%); }
+    }
+
+    /* ===== HERO TEXT STAGGERED REVEAL ===== */
+    .hero h1 {
+      overflow: hidden;
+    }
+
+    .hero h1 .word {
+      display: inline-block;
+      animation: word-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .hero h1 .word:nth-child(1) { animation-delay: 0.1s; }
+    .hero h1 .word:nth-child(2) { animation-delay: 0.2s; }
+    .hero h1 .word:nth-child(3) { animation-delay: 0.3s; }
+    .hero h1 .word:nth-child(4) { animation-delay: 0.4s; }
+    .hero h1 .word:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes word-rise {
+      from { opacity: 0; transform: translateY(40px) rotate(2deg); filter: blur(4px); }
+      to { opacity: 1; transform: translateY(0) rotate(0); filter: blur(0); }
+    }
+
+    /* ===== SECTION HEADING UNDERLINE DRAW ===== */
+    .section-header h2 {
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--warm));
+      border-radius: 2px;
+      transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .section-header h2.visible::after {
+      width: 60px;
+    }
+
+    /* ===== NAV LOGO ANIMATION ===== */
+    .nav-logo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-logo::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-logo:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* ===== FLOATING ACTION DOTS ===== */
+    .hero-content::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      background-image: radial-gradient(circle, var(--accent) 1.5px, transparent 1.5px);
+      background-size: 16px 16px;
+      opacity: 0.15;
+      animation: dots-fade 4s ease-in-out infinite;
+    }
+
+    @keyframes dots-fade {
+      0%, 100% { opacity: 0.15; transform: translate(0, 0); }
+      50% { opacity: 0.25; transform: translate(5px, -5px); }
+    }
+
+    /* ===== MAGNETIC BUTTON EFFECT ===== */
+    .btn {
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ===== REVEAL FROM DIFFERENT DIRECTIONS ===== */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-left.visible,
+    .reveal-right.visible,
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    /* ===== CTA SECTION GLOW ===== */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(196, 100, 42, 0.06), transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: cta-glow-pulse 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes cta-glow-pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+    }
+
+    /* ===== SKILL CARD NUMBER COUNTER ===== */
+    .skill-category {
+      counter-increment: skill;
+    }
+
+    .skill-category::before {
+      content: '0' counter(skill);
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .skill-category:hover::before {
+      opacity: 0.5;
+    }
+
+    /* ===== FOOTER WAVE ===== */
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(to bottom, transparent, var(--bg-primary));
+    }
+
+    /* ===== TEXT HIGHLIGHT ON SCROLL ===== */
+    .about-text strong {
+      background: linear-gradient(120deg, rgba(196, 100, 42, 0.15) 0%, rgba(196, 100, 42, 0.15) 100%);
+      background-repeat: no-repeat;
+      background-size: 0% 100%;
+      background-position: 0 80%;
+      transition: background-size 0.6s ease;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .about-text.visible strong {
+      background-size: 100% 100%;
+    }
   </style>
 </head>
 <body>
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Custom Cursor -->
+<div class="custom-cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
 
 <!-- Background Effects -->
 <div class="bg-grid"></div>
 <div class="bg-gradient-orb orb-1"></div>
 <div class="bg-gradient-orb orb-2"></div>
+<div class="bg-gradient-orb orb-3"></div>
 <div class="particles" id="particles"></div>
 
 <!-- Navigation -->
@@ -1282,7 +1588,7 @@
       Not just learning tech.<br>Building with it.
     </h2>
     <div class="about-grid">
-      <div class="about-text reveal reveal-delay-2">
+      <div class="about-text reveal-left reveal-delay-2">
         <p>
           I'm a <strong>self-driven builder</strong> based in Lagos, Nigeria, exploring the intersection
           of web development, blockchain, automation, and digital systems. I don't just follow tutorials —
@@ -1301,7 +1607,7 @@
         </p>
       </div>
       <div class="about-highlights">
-        <div class="highlight-card reveal reveal-delay-1">
+        <div class="highlight-card reveal-right reveal-delay-1">
           <div class="highlight-icon" style="background: var(--accent-glow); color: var(--accent);">
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           </div>
@@ -1310,7 +1616,7 @@
             <p>I don't wait for permission. I identify problems, prototype solutions, and iterate fast.</p>
           </div>
         </div>
-        <div class="highlight-card reveal reveal-delay-2">
+        <div class="highlight-card reveal-right reveal-delay-2">
           <div class="highlight-icon" style="background: var(--green-glow); color: var(--green);">
             <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           </div>
@@ -1319,7 +1625,7 @@
             <p>Frontend, Web3, APIs, CMS — I'm building across domains to find my edge.</p>
           </div>
         </div>
-        <div class="highlight-card reveal reveal-delay-3">
+        <div class="highlight-card reveal-right reveal-delay-3">
           <div class="highlight-icon" style="background: var(--warm-glow); color: var(--warm);">
             <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           </div>
@@ -1328,7 +1634,7 @@
             <p>Every experiment is a step toward launching scalable products and a tech business.</p>
           </div>
         </div>
-        <div class="highlight-card reveal reveal-delay-4">
+        <div class="highlight-card reveal-right reveal-delay-4">
           <div class="highlight-icon" style="background: var(--coral-glow); color: var(--coral);">
             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
@@ -1648,7 +1954,7 @@
       Whether it's a collaboration, an opportunity, or just a conversation about tech —
       I'm always open to connecting with fellow builders.
     </p>
-    <div class="cta-buttons reveal reveal-delay-3">
+    <div class="cta-buttons reveal-scale reveal-delay-3">
       <a href="mailto:your.email@example.com" class="btn btn-primary">
         <svg class="icon-svg icon-svg-sm" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Send an Email
@@ -1838,6 +2144,88 @@
       card.style.transform = '';
     });
   });
+
+  // ===== SCROLL PROGRESS BAR =====
+  const scrollProgress = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    scrollProgress.style.width = scrollPercent + '%';
+  }, { passive: true });
+
+  // ===== CUSTOM CURSOR =====
+  const cursor = document.getElementById('cursor');
+  const cursorTrail = document.getElementById('cursorTrail');
+  
+  if (window.matchMedia('(pointer: fine)').matches) {
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.12;
+      trailY += (mouseY - trailY) * 0.12;
+      cursorTrail.style.left = trailX + 'px';
+      cursorTrail.style.top = trailY + 'px';
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    const hoverTargets = document.querySelectorAll('a, button, .btn, .project-card, .skill-tag, .nav-toggle, .social-link, .highlight-card, .vision-card');
+    hoverTargets.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+  }
+
+  // ===== MAGNETIC BUTTON EFFECT =====
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // ===== SECTION HEADING UNDERLINE ANIMATION =====
+  document.querySelectorAll('.section-header h2, .about-text').forEach(el => {
+    const headingObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+    headingObserver.observe(el);
+  });
+
+  // ===== MULTI-DIRECTION REVEALS =====
+  document.querySelectorAll('.reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // ===== HERO TEXT WORD SPLIT =====
+  const heroH1 = document.querySelector('.hero h1');
+  if (heroH1) {
+    const lines = heroH1.innerHTML.split('<br>');
+    heroH1.innerHTML = lines.map(line => {
+      const cleaned = line.trim();
+      if (cleaned.includes('gradient-text')) return cleaned;
+      return cleaned.split(' ').map(word => `<span class="word">${word}</span>`).join(' ');
+    }).join('<br>');
+  }
 </script>
 
 </body>
