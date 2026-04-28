@@ -301,10 +301,17 @@
     }
 
     .hero h1 .gradient-text {
-      background: linear-gradient(135deg, var(--accent), var(--warm), var(--green));
+      background: linear-gradient(135deg, var(--accent), var(--warm), var(--green), var(--accent));
+      background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: gradient-shift 6s ease-in-out infinite;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .hero-tagline {
@@ -980,6 +987,199 @@
       width: 16px;
       height: 16px;
     }
+
+    /* ===== ENHANCED ANIMATIONS ===== */
+
+    /* Hero badge slide-in */
+    .hero-badge {
+      animation: slide-in-left 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    }
+
+    @keyframes slide-in-left {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Button hover glow pulse */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: none;
+    }
+
+    .btn-primary:hover::after {
+      animation: btn-shimmer 0.6s ease forwards;
+    }
+
+    @keyframes btn-shimmer {
+      to { transform: translateX(100%); }
+    }
+
+    /* Skill icon float */
+    .skill-category-icon {
+      animation: icon-float 3s ease-in-out infinite;
+    }
+
+    .skill-category:nth-child(2) .skill-category-icon { animation-delay: 0.4s; }
+    .skill-category:nth-child(3) .skill-category-icon { animation-delay: 0.8s; }
+    .skill-category:nth-child(4) .skill-category-icon { animation-delay: 1.2s; }
+    .skill-category:nth-child(5) .skill-category-icon { animation-delay: 1.6s; }
+
+    @keyframes icon-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Highlight card icon pulse on hover */
+    .highlight-card:hover .highlight-icon {
+      animation: icon-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes icon-pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Skill tag hover */
+    .skill-tag {
+      transition: all var(--transition);
+    }
+
+    .skill-tag:hover {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Timeline dot pulse */
+    .timeline-dot {
+      animation: timeline-pulse 2.5s ease-in-out infinite;
+    }
+
+    .timeline-item:nth-child(2) .timeline-dot { animation-delay: 0.5s; }
+    .timeline-item:nth-child(3) .timeline-dot { animation-delay: 1s; }
+    .timeline-item:nth-child(4) .timeline-dot { animation-delay: 1.5s; }
+    .timeline-item:nth-child(5) .timeline-dot { animation-delay: 2s; }
+
+    @keyframes timeline-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(196, 100, 42, 0.3); }
+      50% { box-shadow: 0 0 0 8px rgba(196, 100, 42, 0); }
+    }
+
+    /* Vision number count-up feel */
+    .vision-number {
+      transition: opacity 0.6s ease;
+    }
+
+    .vision-card:hover .vision-number {
+      opacity: 0.8;
+    }
+
+    /* Code block line scan */
+    .code-block::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.3;
+      animation: code-scan 4s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes code-scan {
+      0%, 100% { top: 40px; opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      95% { opacity: 0; }
+      50% { top: calc(100% - 10px); }
+    }
+
+    /* Stats counter animation */
+    .stat-item h3 {
+      display: inline-block;
+    }
+
+    .stat-item.animated h3 {
+      animation: count-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes count-pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      60% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Social link hover rotation */
+    .social-link:hover svg {
+      animation: social-bounce 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes social-bounce {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.25) rotate(-5deg); }
+      70% { transform: scale(0.95) rotate(2deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+
+    /* Nav link active indicator */
+    .nav-links a.active {
+      color: var(--text-primary);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    /* Section label line grow */
+    .section-label.visible::before {
+      animation: line-grow 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes line-grow {
+      from { width: 0; }
+      to { width: 24px; }
+    }
+
+    /* Project card border glow on hover */
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--accent), var(--warm), var(--green));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .project-card:hover::before {
+      opacity: 0.15;
+    }
+
+    /* Smooth page load */
+    body {
+      animation: page-fade-in 0.8s ease;
+    }
+
+    @keyframes page-fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -1551,6 +1751,91 @@
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    });
+  });
+
+  // ===== PARALLAX ORB MOVEMENT ON SCROLL =====
+  const orb1 = document.querySelector('.orb-1');
+  const orb2 = document.querySelector('.orb-2');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (orb1) orb1.style.transform = `translateY(${scrollY * 0.15}px)`;
+    if (orb2) orb2.style.transform = `translateY(${scrollY * -0.1}px)`;
+  }, { passive: true });
+
+  // ===== ACTIVE NAV LINK ON SCROLL =====
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navAnchors.forEach(a => a.classList.remove('active'));
+        const activeLink = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-72px 0px -50% 0px' });
+
+  sections.forEach(section => navObserver.observe(section));
+
+  // ===== STAT COUNTER ANIMATION =====
+  const statItems = document.querySelectorAll('.stat-item');
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statItems.forEach(item => statsObserver.observe(item));
+
+  // ===== TYPEWRITER EFFECT ON CODE BLOCK =====
+  const codeContent = document.querySelector('.code-content');
+  if (codeContent) {
+    const originalHTML = codeContent.innerHTML;
+    codeContent.style.opacity = '0';
+    
+    const typeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          codeContent.style.opacity = '1';
+          codeContent.innerHTML = '';
+          let i = 0;
+          const plainText = originalHTML.replace(/<[^>]*>/g, '');
+          const interval = setInterval(() => {
+            if (i >= plainText.length) {
+              clearInterval(interval);
+              codeContent.innerHTML = originalHTML;
+              return;
+            }
+            codeContent.textContent += plainText[i];
+            i++;
+          }, 20);
+          typeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    typeObserver.observe(codeContent);
+  }
+
+  // ===== TILT EFFECT ON PROJECT CARDS =====
+  document.querySelectorAll('.project-card, .vision-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / centerY * -3;
+      const rotateY = (x - centerX) / centerX * 3;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
     });
   });
 </script>
