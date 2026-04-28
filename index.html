@@ -255,7 +255,7 @@
       overflow: hidden;
     }
 
-    .hero-content { position: relative; z-index: 2; }
+    .hero-content { position: relative; z-index: 2; max-width: 600px; }
 
     .hero-badge {
       display: inline-flex;
@@ -902,7 +902,11 @@
       .projects-grid { grid-template-columns: 1fr; }
       .vision-grid { grid-template-columns: 1fr; }
       .hero-visual { display: none; }
-      .hero-stats { gap: 2rem; flex-wrap: wrap; }
+      .hero-content { max-width: 100%; text-align: center; margin: 0 auto; }
+      .hero-badge { margin: 0 auto 2rem; }
+      .hero-tagline { margin: 0 auto 2.5rem; }
+      .hero-buttons { justify-content: center; }
+      .hero-stats { gap: 2rem; flex-wrap: wrap; justify-content: center; }
 
       section { padding: 4rem 1.25rem; }
     }
